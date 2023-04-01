@@ -208,6 +208,29 @@ def search(request):
             firereport = ""
     return render(request, 'admin/search.html', locals())
 
+#laura
+def newRequest(request):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    firereport = Firereport.objects.filter(Status__isnull=True)
+    return render(request, 'admin/newRequest.html', locals())
+#laura
+def assignRequest(request):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    firereport = Firereport.objects.filter(Status='Assigned')
+    return render(request, 'admin/assignRequest.html', locals())
+
+#laura
+def allRequest(request):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    firereport = Firereport.objects.all()
+    return render(request, 'admin/allRequest.html', locals())
+
+
+
+
 def changePassword(request):
     if not request.user.is_authenticated:
         return redirect('admin_login')
