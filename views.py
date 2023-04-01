@@ -121,18 +121,6 @@ def deleteTeam(request,pid):
     teams = Teams.objects.get(id=pid)
     teams.delete()
     return redirect('manageTeam')
-#laura
-def newRequest(request):
-    if not request.user.is_authenticated:
-        return redirect('admin_login')
-    firereport = Firereport.objects.filter(Status__isnull=True)
-    return render(request, 'admin/newRequest.html', locals())
-#laura
-def assignRequest(request):
-    if not request.user.is_authenticated:
-        return redirect('admin_login')
-    firereport = Firereport.objects.filter(Status='Assigned')
-    return render(request, 'admin/assignRequest.html', locals())
 
 def teamontheway(request):
     if not request.user.is_authenticated:
@@ -151,12 +139,7 @@ def completeRequest(request):
         return redirect('admin_login')
     firereport = Firereport.objects.filter(Status='Request Completed')
     return render(request, 'admin/completeRequest.html', locals())
-#laura
-def allRequest(request):
-    if not request.user.is_authenticated:
-        return redirect('admin_login')
-    firereport = Firereport.objects.all()
-    return render(request, 'admin/allRequest.html', locals())
+
 
 def deleteRequest(request,pid):
     if not request.user.is_authenticated:
