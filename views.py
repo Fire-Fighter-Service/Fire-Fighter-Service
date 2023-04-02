@@ -2,52 +2,14 @@ import datetime
 
 from django.db.models import Q
 from django.shortcuts import render,redirect
-
 from .models import *
 from datetime import date
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
 # Create your views here.
-def view_request_details(request, pid):
-    if not request.user.is_authenticated:
-        return redirect('admin_login')
-    fire_report = FireReport.objects.get(id=pid)
-    report1 = FireRequestHistory.objects.filter(fire_report=fire_report)
-    team = Teams.objects.all()
-    report_count = FireRequestHistory.objects.filter(fire_report=fire_report).count()
-    try:
-        if request.method == "POST":
-            team_id = request.POST['AssignTo']
-            status = "Assigned"
-            team1 = Teams.objects.get(id=team_id)
-            try:
-                fire_report.assign_to = team1
-                fire_report.status = status
-                now = datetime.now()
-                fire_report.assigned_time = now.strftime("%m/%d/%Y %H:%M:%S")
-                fire_report.save()
-                error = "no"
-            except:
-                error = "yes"
-    except:
-        if request.method == "POST":
-            status = request.POST['status']
-            remark = request.POST['remark']
-
-            try:
-                request_tracking = FireRequestHistory.objects.create(fire_report=fire_report, status=status, remark=remark)
-                fire_report.status = status
-                fire_report.save()
-                fire_report.updation_date = date.today()
-                error1 = "no"
-            except:
-                error1 = "yes"
-    return render(request, 'admin/viewRequestDetails.html', locals())
-
 #arpa
 def index(request):
-
     return render(request, 'index.html')
 #afrin
 def reporting(request):
@@ -69,7 +31,6 @@ def viewStatus(request):
     if request.method == 'POST':
         sd = request.POST['searchdata']
         try:
-
             firereport = Firereport.objects.filter(Q(FullName__icontains=sd) | Q(MobileNumber=sd) | Q(Location__icontains=sd))
         except:
             firereport = ""
@@ -80,7 +41,7 @@ def viewStatusDetails(request,pid):
     report1 = Firetequesthistory.objects.filter(firereport=firereport)
     reportcount = Firetequesthistory.objects.filter(firereport=firereport).count()
     return render(request, 'viewStatusDetails.html', locals())
-
+#arpa
 def admin_login(request):
     error = ""
     if request.method == 'POST':
@@ -109,8 +70,6 @@ def dashboard(request):
     return render(request, 'admin/dashboard.html', locals())
 #rifa
 def addTeam(request):
-
-
     if not request.user.is_authenticated:
         return redirect('admin_login')
     error = ""
@@ -125,7 +84,6 @@ def addTeam(request):
             error = "no"
         except:
             error = "yes"
-
     return render(request, 'admin/addTeam.html', locals())
 #rifa
 def manageTeam(request):
@@ -137,8 +95,6 @@ def manageTeam(request):
 def editTeam(request,pid):
     if not request.user.is_authenticated:
         return redirect('admin_login')
-    
-
     teams = Teams.objects.get(id=pid)
     error =""
     if request.method == "POST":
@@ -165,16 +121,24 @@ def deleteTeam(request,pid):
     teams = Teams.objects.get(id=pid)
     teams.delete()
     return redirect('manageTeam')
+#laura
+def newRequest(request):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    firereport = Firereport.objects.filter(Status__isnull=True)
+    return render(request, 'admin/newRequest.html', locals())
+#laura
+def assignRequest(request):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    firereport = Firereport.objects.filter(Status='Assigned')
+    return render(request, 'admin/assignRequest.html', locals())
 
 def teamontheway(request):
     if not request.user.is_authenticated:
         return redirect('admin_login')
     firereport = Firereport.objects.filter(Status='Team On the Way')
     return render(request, 'admin/teamontheway.html', locals())
-
-
-
-
 
 def workinprogress(request):
     if not request.user.is_authenticated:
@@ -187,12 +151,16 @@ def completeRequest(request):
         return redirect('admin_login')
     firereport = Firereport.objects.filter(Status='Request Completed')
     return render(request, 'admin/completeRequest.html', locals())
-
+#laura
+def allRequest(request):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    firereport = Firereport.objects.all()
+    return render(request, 'admin/allRequest.html', locals())
 
 def deleteRequest(request,pid):
     if not request.user.is_authenticated:
         return redirect('admin_login')
-    
     firereport = Firereport.objects.get(id=pid)
     firereport.delete()
     return redirect('allRequest')
@@ -229,9 +197,9 @@ def viewRequestDetails(request,pid):
                 firereport.Status = status
                 firereport.save()
                 firereport.UpdationDate = date.today()
-                error1 = "no"
-            except:
                 error1 = "yes"
+            except:
+                error1 = "no"
     return render(request, 'admin/viewRequestDetails.html', locals())
 
 def dateReport(request):
@@ -244,7 +212,7 @@ def dateReport(request):
         firereport = Firereport.objects.filter(Q(Postingdate__gte=fd) & Q(Postingdate__lte=td))
         return render(request, 'admin/betweendateReportDtls.html', locals())
     return render(request, 'admin/dateReport.html', locals())
-
+#arpa
 def search(request):
     if not request.user.is_authenticated:
         return redirect('admin_login')
@@ -256,33 +224,7 @@ def search(request):
         except:
             firereport = ""
     return render(request, 'admin/search.html', locals())
-
-#laura
-
-
-def newRequest(request):
-    if not request.user.is_authenticated:
-        return redirect('admin_login')
-    firereport = Firereport.objects.filter(Status__isnull=True)
-    return render(request, 'admin/newRequest.html', locals())
-#laura
-def assignRequest(request):
-    if not request.user.is_authenticated:
-        return redirect('admin_login')
-    firereport = Firereport.objects.filter(Status='Assigned')
-    return render(request, 'admin/assignRequest.html', locals())
-
-#laura
-def allRequest(request):
-
-    if not request.user.is_authenticated:
-        return redirect('admin_login')
-    firereport = Firereport.objects.all()
-    return render(request, 'admin/allRequest.html', locals())
-
-
-
-
+#afrin
 def changePassword(request):
     if not request.user.is_authenticated:
         return redirect('admin_login')
@@ -290,7 +232,6 @@ def changePassword(request):
     user = request.user
     if request.method == "POST":
         o = request.POST['oldpassword']
-
         n = request.POST['newpassword']
         try:
             u = User.objects.get(id=request.user.id)
@@ -303,8 +244,6 @@ def changePassword(request):
         except:
             error = "yes"
     return render(request, 'admin/changePassword.html', locals())
-
-
 
 def Logout(request):
     logout(request)
