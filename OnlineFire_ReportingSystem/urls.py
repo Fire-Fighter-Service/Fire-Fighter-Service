@@ -3,7 +3,7 @@ from django.urls import path
 from firereport.views import *
 from django.conf import settings
 from django.conf.urls.static import static
-#all member
+#all member 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
