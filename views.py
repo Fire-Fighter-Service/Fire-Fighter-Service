@@ -231,26 +231,36 @@ def allRequest(request):
 
 
 
-def changePassword(request):
-    if not request.user.is_authenticated:
-        return redirect('admin_login')
-    error = ""
-    user = request.user
-    if request.method == "POST":
-        o = request.POST['oldpassword']
-        n = request.POST['newpassword']
-        try:
-            u = User.objects.get(id=request.user.id)
-            if user.check_password(o):
-                u.set_password(n)
-                u.save()
-                error = "no"
-            else:
-                error = 'not'
-        except:
-            error = "yes"
-    return render(request, 'admin/changePassword.html', locals())
 
-def Logout(request):
-    logout(request)
-    return redirect('index')
+dkfjdlkfjdfdf
+fdafjd;klfjasd;fjad
+fdfdf
+FileNotFoundErrordfdfdf
+
+fdfdfdfdfdfdferetrhtutyujyuyutrhgsgh
+shtruryujggffrrttryutikrksghj
+serutikykwsrtrutyj
+stkskyktkmyk
+SystemError
+
+
+mykyky
+global
+globalgg
+globalg
+gg
+
+gteteete
+
+KeyboardInterruptkukuku
+
+
+ukkuuuuuuuu
+
+
+ererererer
+dfsdfsfsf
+
+
+f
+ssssssssffs
