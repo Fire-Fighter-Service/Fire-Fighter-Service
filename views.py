@@ -227,8 +227,7 @@ def search(request):
     return render(request, 'admin/search.html', locals())
 #afrin
 def changePassword(request):
-    if not request.user.is_authenticated:
-        return redirect('admin_login')
+   
     error = ""
     user = request.user
     if request.method == "POST":
