@@ -61,11 +61,12 @@ def admin_login(request):
 
 def dashboard(request):
     
+   
+    totalreqcomplete = Firereport.objects.filter(Status='Request Completed').count()
     totalnewequest = Firereport.objects.filter(Status__isnull=True).count()
     totalAssign = Firereport.objects.filter(Status='Assigned').count()
     totalontheway = Firereport.objects.filter(Status='Team On the Way').count()
     totalworkprocess = Firereport.objects.filter(Status='Fire Relief Work in Progress').count()
-    totalreqcomplete = Firereport.objects.filter(Status='Request Completed').count()
     totalfire = Firereport.objects.all().count()
     
 #rifa
