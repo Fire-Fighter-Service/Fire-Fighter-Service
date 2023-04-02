@@ -32,7 +32,7 @@ class Teams(models.Model):
 class Firetequesthistory(models.Model):
    firereport = models.ForeignKey(Firereport, on_delete=models.CASCADE, null=True)
    status = models.CharField(max_length=200, null=True)
-    # remark = models.CharField(max_length=250, null=True)
+     remark = models.CharField(max_length=250, null=True)
     postingDate = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
