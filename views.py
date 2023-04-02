@@ -58,17 +58,17 @@ def admin_login(request):
         except:
             error = "yes"
     return render(request, 'admin_login.html', locals())
-
+#afrin
 def dashboard(request):
-    
-   
-    totalreqcomplete = Firereport.objects.filter(Status='Request Completed').count()
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
     totalnewequest = Firereport.objects.filter(Status__isnull=True).count()
     totalAssign = Firereport.objects.filter(Status='Assigned').count()
     totalontheway = Firereport.objects.filter(Status='Team On the Way').count()
     totalworkprocess = Firereport.objects.filter(Status='Fire Relief Work in Progress').count()
+    totalreqcomplete = Firereport.objects.filter(Status='Request Completed').count()
     totalfire = Firereport.objects.all().count()
-    
+    return render(request, 'admin/dashboard.html', locals())
 #rifa
 def addTeam(request):
     if not request.user.is_authenticated:
