@@ -233,16 +233,7 @@ def changePassword(request):
     if request.method == "POST":
         o = request.POST['oldpassword']
         n = request.POST['newpassword']
-        try:
-            u = User.objects.get(id=request.user.id)
-            if user.check_password(o):
-                u.set_password(n)
-                u.save()
-                error = "no"
-            else:
-                error = 'not'
-        except:
-            error = "yes"
+        
     return render(request, 'admin/changePassword.html', locals())
 
 def Logout(request):
