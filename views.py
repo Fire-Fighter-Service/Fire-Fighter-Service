@@ -82,9 +82,9 @@ def addTeam(request):
 
         try:
             Teams.objects.create(teamName=teamName, teamLeaderName=teamLeaderName, teamLeadMobno=teamLeadMobno, teamMembers=teamMembers)
-            error = "no"
-        except:
             error = "yes"
+        except:
+            error = "no"
     return render(request, 'admin/addTeam.html', locals())
 #rifa
 def manageTeam(request):
