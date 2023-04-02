@@ -9,6 +9,41 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
 # Create your views here.
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+
+from .models import Firereport, Firetequesthistory, Teams
+
+
+def viewRequestDetails(request, pid):
+    firereport = Firereport.objects.get(id=pid)
+    report_history = Firetequesthistory.objects.filter(firereport=firereport).order_by('-created_at')
+    teams = Teams.objects.all()
+    report_count = report_history.count()
+
+    if request.method == "POST":
+        if 'AssignTo' in request.POST:
+            team_id = request.POST['AssignTo']
+            team = Teams.objects.get(id=team_id)
+            firereport.AssignTo = team
+            firereport.Status = Firereport.ASSIGNED
+            firereport.AssignedTime = timezone.now()
+            firereport.save()
+        elif 'status' in request.POST and 'remark' in request.POST:
+            status = request.POST['status']
+            remark = request.POST['remark']
+            report_history.create(firereport=firereport, status=status, remark=remark)
+            firereport.Status = status
+            firereport.UpdationDate = timezone.now()
+            firereport.save()
+
+    return render(request, 'admin/viewRequestDetails.html', {
+        'firereport': firereport,
+        'report_history': report_history,
+        'teams': teams,
+        'report_count': report_count
+    })
 #arpa
 def index(request):
 
