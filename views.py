@@ -22,6 +22,10 @@ def reporting(request):
         Message = request.POST['Message']
         try:
             Firereport.objects.create(FullName=FullName, MobileNumber=MobileNumber, Location=Location, Message=Message)
+            error = "no"
+        except:
+            error = "yes"
+        return render(request, 'reporting.html', locals())
 #sumon
 def viewStatus(request):
     sd = None
