@@ -229,8 +229,7 @@ def search(request):
 def changePassword(request):
     if not request.user.is_authenticated:
         return redirect('admin_login')
-    else
-    return render(request, 'reporting.html', locals())
+ 
     error = ""
     user = request.user
     if request.method == "POST":
