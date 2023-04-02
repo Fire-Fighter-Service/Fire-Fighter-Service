@@ -9,41 +9,42 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
 # Create your views here.
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.utils import timezone
-
-from .models import Firereport, Firetequesthistory, Teams
-
-
-def viewRequestDetails(request, pid):
-    firereport = Firereport.objects.get(id=pid)
-    report_history = Firetequesthistory.objects.filter(firereport=firereport).order_by('-created_at')
-    teams = Teams.objects.all()
-    report_count = report_history.count()
-
-    if request.method == "POST":
-        if 'AssignTo' in request.POST:
+def view_request_details(request, pid):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    fire_report = FireReport.objects.get(id=pid)
+    report1 = FireRequestHistory.objects.filter(fire_report=fire_report)
+    team = Teams.objects.all()
+    report_count = FireRequestHistory.objects.filter(fire_report=fire_report).count()
+    try:
+        if request.method == "POST":
             team_id = request.POST['AssignTo']
-            team = Teams.objects.get(id=team_id)
-            firereport.AssignTo = team
-            firereport.Status = Firereport.ASSIGNED
-            firereport.AssignedTime = timezone.now()
-            firereport.save()
-        elif 'status' in request.POST and 'remark' in request.POST:
+            status = "Assigned"
+            team1 = Teams.objects.get(id=team_id)
+            try:
+                fire_report.assign_to = team1
+                fire_report.status = status
+                now = datetime.now()
+                fire_report.assigned_time = now.strftime("%m/%d/%Y %H:%M:%S")
+                fire_report.save()
+                error = "no"
+            except:
+                error = "yes"
+    except:
+        if request.method == "POST":
             status = request.POST['status']
             remark = request.POST['remark']
-            report_history.create(firereport=firereport, status=status, remark=remark)
-            firereport.Status = status
-            firereport.UpdationDate = timezone.now()
-            firereport.save()
 
-    return render(request, 'admin/viewRequestDetails.html', {
-        'firereport': firereport,
-        'report_history': report_history,
-        'teams': teams,
-        'report_count': report_count
-    })
+            try:
+                request_tracking = FireRequestHistory.objects.create(fire_report=fire_report, status=status, remark=remark)
+                fire_report.status = status
+                fire_report.save()
+                fire_report.updation_date = date.today()
+                error1 = "no"
+            except:
+                error1 = "yes"
+    return render(request, 'admin/viewRequestDetails.html', locals())
+
 #arpa
 def index(request):
 
