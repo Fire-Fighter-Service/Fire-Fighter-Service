@@ -20,7 +20,8 @@ def reporting(request):
         MobileNumber = request.POST['MobileNumber']
         Location = request.POST['Location']
         Message = request.POST['Message']
-        
+        try:
+            Firereport.objects.create(FullName=FullName, MobileNumber=MobileNumber, Location=Location, Message=Message)
 #sumon
 def viewStatus(request):
     sd = None
