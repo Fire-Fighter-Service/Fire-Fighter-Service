@@ -27,7 +27,7 @@ urlpatterns = [
     path('dateReport', dateReport, name='dateReport'),
     path('search', search, name='search'),
     path('changePassword', changePassword, name='changePassword'),
-
+    
     path('logout/', Logout, name='logout'),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
