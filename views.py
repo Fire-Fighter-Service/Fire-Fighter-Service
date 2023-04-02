@@ -15,17 +15,12 @@ def index(request):
 #afrin
 def reporting(request):
     error = ""
-    if request.method == "POST":
+     if request.method == "POST":
         FullName = request.POST['FullName']
         MobileNumber = request.POST['MobileNumber']
         Location = request.POST['Location']
         Message = request.POST['Message']
-        try:
-            Firereport.objects.create(FullName=FullName, MobileNumber=MobileNumber, Location=Location, Message=Message)
-            error = "no"
-        except:
-            error = "yes"
-    return render(request, 'reporting.html', locals())
+        
 #sumon
 def viewStatus(request):
     sd = None
