@@ -41,7 +41,7 @@ def viewStatusDetails(request,pid):
     report1 = Firetequesthistory.objects.filter(firereport=firereport)
     reportcount = Firetequesthistory.objects.filter(firereport=firereport).count()
     return render(request, 'viewStatusDetails.html', locals())
-#rifa
+
 def admin_login(request):
     error = ""
     if request.method == 'POST':
@@ -91,7 +91,7 @@ def manageTeam(request):
         return redirect('admin_login')
     teams = Teams.objects.all()
     return render(request, 'admin/manageTeam.html', locals())
-
+#rifa
 def editTeam(request,pid):
     if not request.user.is_authenticated:
         return redirect('admin_login')
