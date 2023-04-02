@@ -67,7 +67,7 @@ def dashboard(request):
     totalworkprocess = Firereport.objects.filter(Status='Fire Relief Work in Progress').count()
     totalreqcomplete = Firereport.objects.filter(Status='Request Completed').count()
     totalfire = Firereport.objects.all().count()
-    return render(request, 'admin/dashboard.html', locals())
+    
 #rifa
 def addTeam(request):
     if not request.user.is_authenticated:
