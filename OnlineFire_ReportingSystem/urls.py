@@ -10,7 +10,7 @@ urlpatterns = [
     path('reporting2', reporting, name='reporting'),
     path('viewStatus', viewStatus, name='viewStatus'),
     path('viewStatusDetails/<int:pid>', viewStatusDetails, name='viewStatusDetails'),
-    
+    path('admin_login', admin_login, name='admin_login'),
     path('dashboard', dashboard, name='dashboard'),
     path('addTeam', addTeam, name='addteam'),
     path('manageTeam', manageTeam, name='manageteam'),
