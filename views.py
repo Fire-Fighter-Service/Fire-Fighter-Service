@@ -227,15 +227,24 @@ def search(request):
     return render(request, 'admin/search.html', locals())
 #afrin
 def changePassword(request):
-   
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
     error = ""
     user = request.user
     if request.method == "POST":
         o = request.POST['oldpassword']
         n = request.POST['newpassword']
-        
-    return render(request, 'admin/changePassword.html', locals())
-
+        try:
+            u = User.objects.get(id=request.user.id)
+            if user.check_password(o):
+                u.set_password(n)
+                u.save()
+                error = "no"
+            else:
+                error = 'not'
+        except:
+            error = "yes"
+    return render(request, 'admin/changePassword.html', locals()
 def Logout(request):
     logout(request)
     return redirect('index')
