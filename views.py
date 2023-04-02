@@ -60,8 +60,7 @@ def admin_login(request):
     return render(request, 'admin_login.html', locals())
 
 def dashboard(request):
-    if not request.user.is_authenticated:
-        return redirect('admin_login')
+    
     totalnewequest = Firereport.objects.filter(Status__isnull=True).count()
     totalAssign = Firereport.objects.filter(Status='Assigned').count()
     totalontheway = Firereport.objects.filter(Status='Team On the Way').count()
