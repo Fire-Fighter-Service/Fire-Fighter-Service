@@ -91,7 +91,7 @@ def manageTeam(request):
     if not request.user.is_authenticated:
         return redirect('admin_login')
     teams = Teams.objects.all()
-    return render(request, 'admin/manageTeam.html', locals())
+    return render(request, 'admin/manage_Team.html', locals())
 #rifa
 def editTeam(request,pid):
     if not request.user.is_authenticated:
@@ -110,7 +110,7 @@ def editTeam(request,pid):
         teams.teamMembers = teamMembers
 
         try:
-            teams.save()
+            teams.save("")
             error = "no"
         except:
             error = "yes"
