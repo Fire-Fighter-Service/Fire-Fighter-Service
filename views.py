@@ -41,7 +41,7 @@ def viewStatusDetails(request,pid):
     report1 = Firetequesthistory.objects.filter(firereport=firereport)
     reportcount = Firetequesthistory.objects.filter(firereport=firereport).count()
     return render(request, 'viewStatusDetails.html', locals())
-
+#rifa
 def admin_login(request):
     error = ""
     if request.method == 'POST':
@@ -68,7 +68,7 @@ def dashboard(request):
     totalreqcomplete = Firereport.objects.filter(Status='Request Completed').count()
     totalfire = Firereport.objects.all().count()
     return render(request, 'admin/dashboard.html', locals())
-
+#rifa
 def addTeam(request):
     if not request.user.is_authenticated:
         return redirect('admin_login')
@@ -85,7 +85,7 @@ def addTeam(request):
         except:
             error = "yes"
     return render(request, 'admin/addTeam.html', locals())
-
+#rifa
 def manageTeam(request):
     if not request.user.is_authenticated:
         return redirect('admin_login')
