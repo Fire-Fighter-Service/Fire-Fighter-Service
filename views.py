@@ -152,12 +152,12 @@ def completeRequest(request):
         return redirect('admin_login')
     firereport = Firereport.objects.filter(Status='Request Completed')
     return render(request, 'admin/completeRequest.html', locals())
-#laura
+#nigar
 def allRequest(request):
     if not request.user.is_authenticated:
         return redirect('admin_login')
     firereport = Firereport.objects.all()
-    return render(request, 'admin/allRequest.html', locals())
+    return render(request, 'admin/allRequest.html', locals(""))
 
 def deleteRequest(request,pid):
     if not request.user.is_authenticated:
