@@ -39,8 +39,8 @@ def viewStatus(request):
 #nigar
 def viewStatusDetails(request,pid):
     firereport = Firereport.objects.get(id=pid)
-    report1 = Firetequesthistory.objects.filter(firereport=firereport)
-    reportcount = Firetequesthistory.objects.filter(firereport=firereport).count()
+    report1 = Firetequesthistory.objects.filter(firereport=fire_report)
+    reportcount = Firetequesthistory.objects.filter(firereport=fire_report).count()
     return render(request, 'viewStatusDetails.html', locals())
 #arpa
 def admin_login(request):
