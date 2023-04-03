@@ -57,7 +57,7 @@
                                 <td>{{i.Postingdate}}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a class="btn btn-primary" href="{% url 'viewRequestDetails' i.id %}"><i class="fa fa-eye"></i></a> &nbsp;&nbsp;
+                                        <a class="btn btn-primary" href="{% url 'view_Request_Details' i.id %}"><i class="fa fa-eye"></i></a> &nbsp;&nbsp;
                                         <a class="btn btn-danger" onclick="return confirm('Are you sure to Delete ?')" href="{% url 'deleteRequest' i.id %}"><i
                                             class="fa fa-trash-alt"></i></a>
                                     </div>
