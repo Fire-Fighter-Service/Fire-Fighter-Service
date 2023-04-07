@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Team Locations</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Team Locations</h1>
+            {% for team_location in team_locations %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ team_location.team }}</h5>
+                        <p class="card-text">Lat: {{ team_location.lat }}, Lon: {{ team_location.lon }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-6">
+            <div id="map"></div>
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+        crossorigin=""></script>
+<script>
+    var mapOptions = {
+        center: [23.755066449799976, 90.38902852800817],
+        zoom: 20,
+    }
+    var map = new L.map('map', mapOptions);
+    var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+    map.addLayer(layer);
+    {% for team_location in team_locations %}
+        var marker = L.marker([{{team_location.lat}},{{team_location.lon}}]);
+        var popup_text="{{team_location.team}}"
+        marker.addTo(map).bindPopup(popup_text).openPopup();
+    {% endfor %}
+</script>
+</body>
+</html>
