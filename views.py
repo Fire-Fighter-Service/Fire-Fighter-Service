@@ -249,3 +249,28 @@ def changePassword(request):
 def Logout(request):
     logout(request)
     return redirect('index')
+def viewLocation(request):
+    teams=Teams.objects.all()
+    teamLocation=[]
+    for team in teams:
+        recent_coordinates=TeamLocation.objects.filter(team=team.id).order_by('-time_stamp')
+        if len(recent_coordinates)>0:
+            teamLocation.append(recent_coordinates[0])
+
+    return render(request,'viewlocation.html',{'team_locations':teamLocation})
+
+def addLocation(request):
+
+    locationForm = TeamLocationForm()
+    if request.method == 'POST':
+        
+        locationForm = TeamLocationForm(request.POST,TeamLocation.team)
+        
+        if locationForm.is_valid():
+            locationForm.save()
+    
+            return render(request,'addTeamLocations.html',{'form':locationForm,'success':'Location send to server'})
+        else:
+            return render(request,'addTeamLocations.html',{'form':locationForm})
+    return render(request,'addTeamLocations.html',{'form':locationForm})
+
