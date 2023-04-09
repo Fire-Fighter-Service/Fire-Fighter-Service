@@ -249,6 +249,7 @@ def changePassword(request):
 def Logout(request):
     logout(request)
     return redirect('index')
+#rifa                  
 def viewLocation(request):
     teams=Teams.objects.all()
     teamLocation=[]
@@ -258,7 +259,7 @@ def viewLocation(request):
             teamLocation.append(recent_coordinates[0])
 
     return render(request,'viewlocation.html',{'team_locations':teamLocation})
-
+#afrin
 def addLocation(request):
 
     locationForm = TeamLocationForm()
