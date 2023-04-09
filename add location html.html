@@ -59,6 +59,10 @@
       }
     }
 
+
+
+
+    
     function showPosition(position) {
       x.innerHTML = "Latitude: " + position.coords.latitude + 
       "<br>Longitude: " + position.coords.longitude;
@@ -70,6 +74,11 @@
         draggable: true,
       });
 
+
+
+
+
+
       marker.on("drag", function(e) {
         var marker = e.target;
         var position = marker.getLatLng();
@@ -78,6 +87,11 @@
         lon_fill.value = position.lng;
       });
       
+
+
+
+
+
       // Adding marker to the map
       marker.addTo(map);
     }
