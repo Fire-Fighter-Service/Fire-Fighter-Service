@@ -37,6 +37,11 @@ class Firetequesthistory(models.Model):
 
     def __str__(self):
         return self.status
-
+    #arpa
+class TeamLocation(models.Model):
+       team=models.ForeignKey(Teams,on_delete=models.CASCADE)
+       lat = models.FloatField(max_length=200)
+       lon = models.FloatField(max_length=200)
+       time_stamp=models.DateTimeField(auto_now_add=True)
 
 
