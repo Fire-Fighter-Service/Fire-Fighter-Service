@@ -8,3 +8,79 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
   integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
   crossorigin=""/>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div id="map" style="height: 500px;"></div>
+      </div>
+      <div class="col-md-4">
+        <p>Click the button to get your location</p>
+        <button class="btn btn-primary mb-3" onclick="getLocation()">Get Location</button>
+        <p id="location"></p>
+        <form method="POST">
+          {% csrf_token %}
+          {{form.as_p}}
+          <input class="btn btn-success btn-block" type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+  <script>
+    var x = document.getElementById("location");
+    var lat_fill=document.getElementById('id_lat');
+    var lon_fill=document.getElementById('id_lon');
+    
+    // Creating map options
+    var mapOptions = {
+      center: [23.755066449799976, 90.38902852800817],
+      zoom: 20,
+    };
+    
+    // Creating a map object
+    var map = new L.map('map', mapOptions);
+
+    // Creating a Layer object
+    var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+
+    // Adding layer to the map
+    map.addLayer(layer);
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+
+    function showPosition(position) {
+      x.innerHTML = "Latitude: " + position.coords.latitude + 
+      "<br>Longitude: " + position.coords.longitude;
+      lat_fill.value = position.coords.latitude;
+      lon_fill.value = position.coords.longitude;
+      
+      // Creating a marker
+      var marker = L.marker([position.coords.latitude, position.coords.longitude],{
+        draggable: true,
+      });
+
+      marker.on("drag", function(e) {
+        var marker = e.target;
+        var position = marker.getLatLng();
+        map.panTo(new L.LatLng(position.lat, position.lng));
+        lat_fill.value = position.lat;
+        lon_fill.value = position.lng;
+      });
+      
+      // Adding marker to the map
+      marker.addTo(map);
+    }
+  </script>
+</body>
+</html>
